@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Player : Creature
 {
+    private const string ANIM_RUNNING_BOOL = "isRunning";
+
     [SerializeField] private EndGameHandler gameOverHandler;
 
     public Transform wandHolder;
@@ -29,16 +31,10 @@ public class Player : Creature
 
     void Update()
     {
-        Vector2 moveInput = 
-            new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        moveAmount = moveInput.normalized * speed;
-        if (moveAmount != Vector2.zero)
-        {
-            animator.SetBool("isRunning", true);
-        } else
-        {
-            animator.SetBool("isRunning", false);
-        }
+        Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
+        moveAmount = inputVector * speed;
+
+        animator.SetBool(ANIM_RUNNING_BOOL, moveAmount != Vector2.zero);
     }
 
     private void FixedUpdate()

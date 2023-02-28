@@ -10,19 +10,24 @@ public class Weapon : MonoBehaviour
 
     private float shotTime;
 
+    private void Start()
+    {
+        GameInput.Instance.OnFireAction += GameInput_OnFireAction;
+    }
+
+    private void GameInput_OnFireAction()
+    {
+        if (Time.time >= shotTime)
+        {
+            shotTime = Time.time + timeBetweenShots;
+            Instantiate(projectile, shotPoint.position, transform.rotation);
+        }
+    }
+
     void Update()
     {
         transform.rotation = CalculateRotation(transform.position,
-            Camera.main.ScreenToWorldPoint(Input.mousePosition));
-
-        if (Input.GetMouseButton(0))
-        {
-            if (Time.time >= shotTime)
-            {
-                shotTime = Time.time + timeBetweenShots;
-                Instantiate(projectile, shotPoint.position, transform.rotation);
-            }
-        }
+            GameInput.Instance.GetMousePosition());
     }
 
     static public Quaternion CalculateRotation(Vector3 position, Vector3 target)
@@ -31,5 +36,10 @@ public class Weapon : MonoBehaviour
         float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(-angle, Vector3.forward);
         return rotation;
+    }
+
+    private void OnDestroy()
+    {
+        GameInput.Instance.OnFireAction -= GameInput_OnFireAction;
     }
 }
