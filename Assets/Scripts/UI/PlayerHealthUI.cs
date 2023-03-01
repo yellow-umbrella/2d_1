@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameplayUI : MonoBehaviour
+public class PlayerHealthUI : MonoBehaviour
 {
     [SerializeField] private Image heartTemplate;
     [SerializeField] private Transform heartContainer;

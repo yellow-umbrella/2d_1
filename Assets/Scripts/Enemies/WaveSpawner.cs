@@ -20,8 +20,6 @@ public class WaveSpawner : MonoBehaviour
     public Transform bossSpawnPoint;
     public GameObject bossHealthBar;
 
-    [SerializeField] private EndGameHandler victoryHandler;
-
     private int currentWave;
     private Transform player;
     private bool finishedSpawning;
@@ -71,7 +69,7 @@ public class WaveSpawner : MonoBehaviour
         if (spawnedBoss && bossInstance == null && 
             GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
-            victoryHandler.EndGame();
+            //victoryHandler.EndGame();
             gameObject.SetActive(false);
         }
 

@@ -14,15 +14,12 @@ public class Player : MonoBehaviour, ICanTakeDamage
     [SerializeField] private int health;
     [SerializeField] private float speed;
 
-    [SerializeField] private EndGameHandler gameOverHandler;
-    [SerializeField] private Transform wandHolder;
+    [SerializeField] private Transform weaponHolder;
     [SerializeField] private GameObject weapon;
     
     public Vector2 MoveVector => moveVector;
     public int Health => health;
     public int MaxHealth => maxHealth;
-
-    //[SerializeField] private Animator hurtAnimator;
 
     private Rigidbody2D rb;
     private Vector2 moveVector;
@@ -49,7 +46,7 @@ public class Player : MonoBehaviour, ICanTakeDamage
     public void ChangeWeapon(Weapon newWeapon)
     {
         Destroy(weapon);
-        weapon = Instantiate(newWeapon, wandHolder).gameObject;
+        weapon = Instantiate(newWeapon, weaponHolder).gameObject;
     }
 
     public void Heal(int amount)
@@ -62,11 +59,14 @@ public class Player : MonoBehaviour, ICanTakeDamage
     {
         health -= damage;
         OnHurt?.Invoke();
-        //hurtAnimator.SetTrigger("hurt");
         if (health <= 0)
         {
-            Destroy(gameObject);
-            gameOverHandler.EndGame();
+            Hide();
         }
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }
