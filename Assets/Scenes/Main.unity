@@ -219,7 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   speed: 10
-  weaponHolder: {fileID: 0}
+  weaponHolder: {fileID: 650884532}
   weapon: {fileID: 1818526732}
 --- !u!1 &47974341
 GameObject:
@@ -4582,25 +4582,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - enemies:
-    - {fileID: 3269064783068034210, guid: c440efdfeeab60b47967910665877aad, type: 3}
-    count: 3
-    timeBetweenSpawns: 0.5
-  - enemies:
-    - {fileID: 4662065335061632791, guid: 4649462cf80996148b29da6e4e7aab60, type: 3}
-    count: 3
-    timeBetweenSpawns: 1
-  - enemies:
-    - {fileID: 6958136903354092734, guid: bb933a6db21515747959d3bb8d38a976, type: 3}
-    - {fileID: 3269064783068034210, guid: c440efdfeeab60b47967910665877aad, type: 3}
-    - {fileID: 6958136903354092734, guid: bb933a6db21515747959d3bb8d38a976, type: 3}
-    count: 4
-    timeBetweenSpawns: 0.5
-  - enemies:
-    - {fileID: 4662065335061632791, guid: 4649462cf80996148b29da6e4e7aab60, type: 3}
-    - {fileID: 6958136903354092734, guid: bb933a6db21515747959d3bb8d38a976, type: 3}
-    count: 4
-    timeBetweenSpawns: 1
+  - {fileID: 11400000, guid: 3efa91eeca1b46e4e8486c6c781c931f, type: 2}
+  - {fileID: 11400000, guid: 3b2abd10a71d89748a93a11244129396, type: 2}
   spawnPoints:
   - {fileID: 234332322}
   - {fileID: 1578056255}
@@ -4626,7 +4609,6 @@ MonoBehaviour:
   boss: {fileID: 5099533018766785866, guid: 6412dc4fc6360d34091401115aa67d0d, type: 3}
   bossSpawnPoint: {fileID: 1516875079}
   bossHealthBar: {fileID: 1429477362}
-  victoryHandler: {fileID: 0}
 --- !u!1 &1876253965
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.Rendering;
 
 public class Enemy : MonoBehaviour, ICanTakeDamage
 {
+
+    public event Action OnKilled;
 
     [SerializeField] protected int health;
     [SerializeField] protected float speed;
@@ -30,13 +33,13 @@ public class Enemy : MonoBehaviour, ICanTakeDamage
         health -= amount;
         if (health <= 0)
         {
-            int randpmNumber = Random.Range(0, 100);
+            int randpmNumber = UnityEngine.Random.Range(0, 100);
             if (randpmNumber < pickupChance)
             {
-                GameObject randomPickup = pickups[Random.Range(0, pickups.Length)];
+                GameObject randomPickup = pickups[UnityEngine.Random.Range(0, pickups.Length)];
                 Instantiate(randomPickup, transform.position, transform.rotation);
             }
-
+            OnKilled?.Invoke();
             //Instantiate(deathEffect, transform.position, transform.rotation);
             Destroy(gameObject);
         }

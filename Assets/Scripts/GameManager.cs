@@ -42,13 +42,15 @@ public class GameManager : MonoBehaviour
             if (countdownTimer <= 0)
             {
                 state = State.WavesOfEnemies;
+                EnemySpawner.Instance.SpawnWaves(AllWavesDefeated);
             }
         }
     }
 
-    private void AllWavesSpawned()
+    private void AllWavesDefeated()
     {
         state = State.Boss;
+        EnemySpawner.Instance.SpawnBoss(BossKilled);
     }
 
     private void BossKilled()

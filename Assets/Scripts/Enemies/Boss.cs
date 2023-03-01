@@ -47,7 +47,8 @@ public class Boss : MonoBehaviour, ICanTakeDamage
                 animator.SetTrigger("stage2");
             }
             Enemy enemy = enemies[Random.Range(0, enemies.Length)];
-            Instantiate(enemy, transform.position + spawnOffset, transform.rotation);
+            //Instantiate(enemy, transform.position + spawnOffset, transform.rotation);
+            EnemySpawner.Instance.SpawnEnemy(enemy, transform.position + spawnOffset, transform.rotation);
             healthBar.value = health;
         }
     }
