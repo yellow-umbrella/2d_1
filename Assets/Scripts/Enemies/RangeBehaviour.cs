@@ -9,7 +9,7 @@ public class RangeBehaviour : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = Player.Instance.gameObject;
         speed = animator.gameObject.GetComponent<Boss>().speed * 2;
     }
 

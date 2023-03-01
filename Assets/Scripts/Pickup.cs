@@ -9,9 +9,9 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject == Player.Instance.gameObject)
         {
-            collision.GetComponent<Player>().ChangeWeapon(weaponToEquip);
+            Player.Instance.ChangeWeapon(weaponToEquip);
             Instantiate(effect, collision.gameObject.transform);
             Destroy(gameObject);
         }

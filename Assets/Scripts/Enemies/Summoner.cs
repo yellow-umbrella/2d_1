@@ -45,9 +45,9 @@ public class Summoner : Enemy
                     animator.SetTrigger("summon");
                 } else
                 {
-                    if (attack.CloseToTarget(player) && attack.CalculateTime())
+                    if (attack.CloseToTarget(player.gameObject) && attack.CalculateTime())
                     {
-                        attack.AttackTarget(player);
+                        attack.AttackTarget(player.gameObject);
                     }
                 }
             }

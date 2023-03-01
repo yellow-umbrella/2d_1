@@ -9,9 +9,9 @@ public class HealthPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject == Player.Instance.gameObject)
         {
-            collision.GetComponent<Player>().Heal(healAmount);
+            Player.Instance.Heal(healAmount);
             Instantiate(effect, collision.gameObject.transform);
             Destroy(gameObject);
         }

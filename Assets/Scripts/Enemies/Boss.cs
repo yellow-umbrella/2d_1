@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Boss : Creature
+public class Boss : MonoBehaviour, ICanTakeDamage
 {
+    public int health;
+    public float speed;
     public int damage;
 
     public Enemy[] enemies;
@@ -13,10 +15,16 @@ public class Boss : Creature
     private int halfHealth;
     private Animator cameraAnimator;
     private Slider healthBar;
+    protected Animator animator;
 
-    protected override void Start()
+    private void Awake()
     {
-        base.Start();
+        animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        
         halfHealth = health / 2;
         cameraAnimator = Camera.main.GetComponent<Animator>();
         healthBar = FindObjectOfType<Slider>();
@@ -24,10 +32,15 @@ public class Boss : Creature
         healthBar.value = health;
     }
 
-    public override bool TakeDamage(int amount)
+    public void TakeDamage(int amount)
     {
-        bool died = base.TakeDamage(amount);
-        if (!died)
+        health -= amount;
+        if (health <= 0)
+        {
+            //Instantiate(deathEffect, transform.position, transform.rotation);
+            healthBar.gameObject.SetActive(false);
+            Destroy(gameObject);
+        } else
         {
             if (health <= halfHealth)
             {
@@ -36,12 +49,7 @@ public class Boss : Creature
             Enemy enemy = enemies[Random.Range(0, enemies.Length)];
             Instantiate(enemy, transform.position + spawnOffset, transform.rotation);
             healthBar.value = health;
-        } else
-        {
-            healthBar.gameObject.SetActive(false);
         }
-        return died;
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

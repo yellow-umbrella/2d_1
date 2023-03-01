@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag(targetTag))
         {
-            collision.GetComponent<Creature>().TakeDamage(damage);
+            collision.GetComponent<ICanTakeDamage>().TakeDamage(damage);
             DestroyProjectile();
         }
     }

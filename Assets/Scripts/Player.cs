@@ -1,45 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : Creature
+public class Player : MonoBehaviour, ICanTakeDamage
 {
-    private const string ANIM_RUNNING_BOOL = "isRunning";
+    public static Player Instance { get; private set; }
+
+    public event Action OnHurt;
+    public event Action OnHealed;
+
+    [SerializeField] private int health;
+    [SerializeField] private float speed;
 
     [SerializeField] private EndGameHandler gameOverHandler;
+    [SerializeField] private Transform wandHolder;
+    [SerializeField] private GameObject weapon;
+    
+    public Vector2 MoveVector => moveVector;
+    public int Health => health;
+    public int MaxHealth => maxHealth;
 
-    public Transform wandHolder;
-    public GameObject weapon;
-
-    public Image[] hearts;
-    public Sprite fullHeart;
-    public Sprite emptyHeart;
-
-    public Animator hurtAnimator;
+    //[SerializeField] private Animator hurtAnimator;
 
     private Rigidbody2D rb;
-    private Vector2 moveAmount;
+    private Vector2 moveVector;
     private int maxHealth;
 
-    protected override void Start()
+    private void Awake()
     {
-        base.Start();
+        Instance = this;
         rb = GetComponent<Rigidbody2D>();
         maxHealth = health;
     }
 
-    void Update()
+    private void Update()
     {
         Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
-        moveAmount = inputVector * speed;
-
-        animator.SetBool(ANIM_RUNNING_BOOL, moveAmount != Vector2.zero);
+        moveVector = inputVector * speed;
     }
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveAmount * Time.deltaTime);
+        rb.velocity = moveVector;
     }
 
     public void ChangeWeapon(Weapon newWeapon)
@@ -48,35 +52,21 @@ public class Player : Creature
         weapon = Instantiate(newWeapon, wandHolder).gameObject;
     }
 
-    void UpdateHealthUI(int currentHealth)
-    {
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            if (i < currentHealth)
-            {
-                hearts[i].sprite = fullHeart;
-            } else
-            {
-                hearts[i].sprite = emptyHeart;
-            }
-        }
-    }
-
-    public override bool TakeDamage(int amount)
-    {
-        bool died = base.TakeDamage(amount);
-        UpdateHealthUI(health);
-        hurtAnimator.SetTrigger("hurt");
-        if (died)
-        {
-            gameOverHandler.EndGame();
-        }
-        return died;
-    }
-
     public void Heal(int amount)
     {
         health = Mathf.Min(health + amount, maxHealth);
-        UpdateHealthUI(health);
+        OnHealed?.Invoke();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        OnHurt?.Invoke();
+        //hurtAnimator.SetTrigger("hurt");
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            gameOverHandler.EndGame();
+        }
     }
 }

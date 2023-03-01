@@ -16,7 +16,7 @@ public class RangedEnemy : Enemy
     {
         if (player != null)
         {
-            if (!attack.CloseToTarget(player))
+            if (!attack.CloseToTarget(player.gameObject))
             {
                 transform.position = Vector2.MoveTowards(
                     transform.position, player.transform.position, speed * Time.deltaTime);
@@ -35,7 +35,7 @@ public class RangedEnemy : Enemy
     {
         if (player != null)
         {
-            attack.AttackTarget(player);
+            attack.AttackTarget(player.gameObject);
         }
     }
 }

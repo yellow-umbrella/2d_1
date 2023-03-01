@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MeleeAttack : Attack
 {
-    public override void AttackTarget(Creature target)
+    public override void AttackTarget(GameObject target)
     {
         StartCoroutine(AttackRoutine(target));
     }
 
-    private IEnumerator AttackRoutine(Creature target)
+    private IEnumerator AttackRoutine(GameObject target)
     {
-        target.TakeDamage(damage);
+        target.GetComponent<ICanTakeDamage>().TakeDamage(damage);
 
         Vector2 originalPosition = transform.position;
         Vector2 targetPosition = target.transform.position;

@@ -31,7 +31,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = Player.Instance.gameObject.transform;
         StartCoroutine(StartNextWave());
     }
 

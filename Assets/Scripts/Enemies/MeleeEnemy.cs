@@ -16,11 +16,11 @@ public class MeleeEnemy : Enemy
     {
         if (player != null)
         {
-            if (attack.CloseToTarget(player))
+            if (attack.CloseToTarget(player.gameObject))
             {
                 if (attack.CalculateTime())
                 {
-                    attack.AttackTarget(player);
+                    attack.AttackTarget(player.gameObject);
                 }
             } else
             {

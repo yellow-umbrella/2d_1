@@ -11,7 +11,7 @@ public class Attack : MonoBehaviour
 
     protected float nextAttackTime;
 
-    public bool CloseToTarget(Creature target)
+    public bool CloseToTarget(GameObject target)
     {
         return (Vector2.Distance(transform.position, target.transform.position) <= range);
     }
@@ -26,7 +26,7 @@ public class Attack : MonoBehaviour
         return false;
     }
 
-    public virtual void AttackTarget(Creature target)
+    public virtual void AttackTarget(GameObject target)
     {
         return;
     }

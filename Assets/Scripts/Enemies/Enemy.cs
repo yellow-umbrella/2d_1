@@ -3,27 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Enemy : Creature
+public class Enemy : MonoBehaviour, ICanTakeDamage
 {
+
+    [SerializeField] protected int health;
+    [SerializeField] protected float speed;
+
     public int pickupChance;
     public GameObject[] pickups;
 
     protected Player player;
+    protected Animator animator;
 
-    protected override void Start()
+    private void Awake()
     {
-        base.Start();
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null)
-        {
-            player = playerObject.GetComponent<Player>();
-        }
+        animator = GetComponent<Animator>();
     }
 
-    public override bool TakeDamage(int amount)
+    protected virtual void Start()
     {
-        bool died = base.TakeDamage(amount);
-        if (died)
+        player = Player.Instance;
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        if (health <= 0)
         {
             int randpmNumber = Random.Range(0, 100);
             if (randpmNumber < pickupChance)
@@ -31,7 +36,9 @@ public class Enemy : Creature
                 GameObject randomPickup = pickups[Random.Range(0, pickups.Length)];
                 Instantiate(randomPickup, transform.position, transform.rotation);
             }
+
+            //Instantiate(deathEffect, transform.position, transform.rotation);
+            Destroy(gameObject);
         }
-        return died;
     }
 }
