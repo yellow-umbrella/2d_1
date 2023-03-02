@@ -10,7 +10,7 @@ public class RangeBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = Player.Instance.gameObject;
-        speed = animator.gameObject.GetComponent<Boss>().speed * 2;
+        speed = animator.gameObject.GetComponent<Boss>().Speed * 2;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

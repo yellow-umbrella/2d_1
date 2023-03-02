@@ -14,7 +14,7 @@ public class PatrolBehaviour : StateMachineBehaviour
     {
         patrolPoints = GameObject.FindGameObjectsWithTag("patrolPoints");
         randomPoint = Random.Range(0, patrolPoints.Length);
-        speed = animator.gameObject.GetComponent<Boss>().speed;
+        speed = animator.gameObject.GetComponent<Boss>().Speed;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

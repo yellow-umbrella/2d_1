@@ -105,7 +105,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnWaves(Action callback)
     {
-        state = State.SpawningWave;
+        state = State.WaitingForNextWave;
         InitTimer(0);
         allWavesDefeatedCallback = callback;
     }

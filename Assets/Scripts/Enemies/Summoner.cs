@@ -56,10 +56,7 @@ public class Summoner : Enemy
 
     public void Summon()
     {
-        if (player != null)
-        {
-            Instantiate(enemyToSummon, transform.position, transform.rotation);
-        }
+        EnemySpawner.Instance.SpawnEnemy(enemyToSummon, transform.position, transform.rotation);
     }
 
 }

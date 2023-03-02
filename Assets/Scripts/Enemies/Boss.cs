@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class Boss : MonoBehaviour, ICanTakeDamage
 {
-    public int health;
-    public float speed;
-    public int damage;
+    [SerializeField] private GameObject deathEffect;
+    [SerializeField] private int health;
+    [SerializeField] private float speed;
+    [SerializeField] private int damage;
 
-    public Enemy[] enemies;
-    public Vector3 spawnOffset;
+    [SerializeField] private Enemy[] enemies;
+    [SerializeField] private Vector3 spawnOffset;
+
+    public float Speed => speed;
 
     private int halfHealth;
     private Animator cameraAnimator;
@@ -37,7 +40,7 @@ public class Boss : MonoBehaviour, ICanTakeDamage
         health -= amount;
         if (health <= 0)
         {
-            //Instantiate(deathEffect, transform.position, transform.rotation);
+            Instantiate(deathEffect, transform.position, transform.rotation);
             healthBar.gameObject.SetActive(false);
             Destroy(gameObject);
         } else
@@ -47,7 +50,6 @@ public class Boss : MonoBehaviour, ICanTakeDamage
                 animator.SetTrigger("stage2");
             }
             Enemy enemy = enemies[Random.Range(0, enemies.Length)];
-            //Instantiate(enemy, transform.position + spawnOffset, transform.rotation);
             EnemySpawner.Instance.SpawnEnemy(enemy, transform.position + spawnOffset, transform.rotation);
             healthBar.value = health;
         }

@@ -6,11 +6,11 @@ using UnityEngine.Rendering;
 
 public class Enemy : MonoBehaviour, ICanTakeDamage
 {
-
     public event Action OnKilled;
 
     [SerializeField] protected int health;
     [SerializeField] protected float speed;
+    [SerializeField] private GameObject deathEffect;
 
     public int pickupChance;
     public GameObject[] pickups;
@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour, ICanTakeDamage
                 Instantiate(randomPickup, transform.position, transform.rotation);
             }
             OnKilled?.Invoke();
-            //Instantiate(deathEffect, transform.position, transform.rotation);
+            Instantiate(deathEffect, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }
